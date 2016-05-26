@@ -10,7 +10,7 @@ module Ruboty
           return unless rhyme
           store.clear
           options = {}
-          if ENV['RHYMER_OVERRIDE_TO'].to_s.size > 0
+          unless ENV['RHYMER_OVERRIDE_TO'].to_s.empty?
             options[:to] = ENV['RHYMER_OVERRIDE_TO']
           end
           message.reply(generate_reply(rhyme), options)
