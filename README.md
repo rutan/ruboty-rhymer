@@ -1,5 +1,7 @@
 # Ruboty::Rhymer
 
+[![Build Status](https://travis-ci.org/rutan/ruboty-rhymer.svg?branch=master)](https://travis-ci.org/rutan/ruboty-rhymer)
+
 [rhymer](https://github.com/suzuki86/rhymer) handler for [Ruboty](https://github.com/r7kamura/ruboty).
 
 ## Installation
@@ -7,6 +9,7 @@
 Add this line to your application's Gemfile:
 
 ```ruby
+gem 'rhymer', github: 'suzuki86/rhymer'
 gem 'ruboty-rhymer'
 ```
 
