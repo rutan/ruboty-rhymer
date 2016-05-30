@@ -5,24 +5,16 @@ module Ruboty
     module Rhymer
       class Hearing < ::Ruboty::Actions::Base
         def call(store)
-          store.concat split_message(message.original[:body])
+          store.concat_message(message.original[:body])
+          return unless store.sufficiently?
+
           rhyme = try_rhymer(store)
           return unless rhyme
+          post_rhyme(rhyme)
           store.clear
-          options = {}
-          unless ENV['RHYMER_OVERRIDE_TO'].to_s.empty?
-            options[:to] = ENV['RHYMER_OVERRIDE_TO']
-          end
-          message.reply(generate_reply(rhyme), options)
         end
 
         private
-
-        def split_message(str)
-          str
-            .split(/[[:space:]。！？\.]+/)
-            .select { |n| n.size >= 4 }
-        end
 
         def generate_reply(rhyme)
           buf = []
@@ -33,9 +25,17 @@ module Ruboty
         end
 
         def try_rhymer(messages)
-          ::Rhymer::Parser.new(messages.join("。\n")).rhymes.select do |rhyme|
+          ::Rhymer::Parser.new(messages.shuffle.join("。\n")).rhymes.select do |rhyme|
             rhyme.last >= score_border
           end.sample
+        end
+
+        def post_rhyme(rhyme)
+          options = {}
+          unless ENV['RHYMER_OVERRIDE_TO'].to_s.empty?
+            options[:to] = ENV['RHYMER_OVERRIDE_TO']
+          end
+          message.reply(generate_reply(rhyme), options)
         end
 
         def score_border

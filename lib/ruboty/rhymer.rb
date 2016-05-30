@@ -1,4 +1,5 @@
 require 'ruboty'
 require 'ruboty/rhymer/version'
+require 'ruboty/rhymer/store'
 require 'ruboty/actions/rhymer/hearing'
 require 'ruboty/handlers/rhymer'

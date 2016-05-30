@@ -25,6 +25,13 @@ Type `exit` or `quit` to end the session.
 今日は良い天気　こんな日は自然に元気
 ```
 
+## ENV
+
+- `RHYMER_STORE` : The border score of rhymer (optional. default: 10)
+- `RHYMER_STOCK_MIN` : Minimum size of stocked messages (optional. default: 10)
+- `RHYMER_STOCK_MAX` : Maximum size of stocked messages (optional. default: 10)
+- `RHYMER_OVERRIDE_TO` : Override `to` parameter of Ruboty (optional)
+
 ## License
 
 MIT
