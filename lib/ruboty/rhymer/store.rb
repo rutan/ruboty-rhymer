@@ -1,4 +1,5 @@
 require 'forwardable'
+require 'uri'
 
 module Ruboty
   module Rhymer
@@ -15,7 +16,7 @@ module Ruboty
       def_delegators :@data, :[], :size, :clear, :shuffle, :join
 
       def concat_message(message)
-        @data.concat(split_message(message))
+        @data.push format_message(message)
         shrink
       end
 
@@ -25,11 +26,12 @@ module Ruboty
 
       private
 
-      def split_message(str)
+      def format_message(str)
         str
           .gsub(/\b[_\*~]+|[_\*~]+\b/, '') # remove decoration
-          .split(/[[:space:]。！？\.]+/) # replace split character
-          .select { |n| n.size >= 4 }
+          .gsub(URI.regexp, ' ') # remove URI
+          .tr('!?', '！？') # replace exclamation
+          .gsub(%r{[ -/:-@\[-\`\{-\~]+$}, ' ') # remove symbol
       end
 
       def shrink

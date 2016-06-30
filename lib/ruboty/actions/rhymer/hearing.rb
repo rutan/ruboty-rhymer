@@ -25,7 +25,9 @@ module Ruboty
         end
 
         def try_rhymer(messages)
-          ::Rhymer::Parser.new(messages.shuffle.join("。\n")).rhymes.select do |rhyme|
+          ::Rhymer::Parser.new(messages.shuffle.join("。\n")).rhymes.reject do |rhyme|
+            rhyme[0].include?(rhyme[1]) || rhyme[1].include?(rhyme[0])
+          end.select do |rhyme|
             rhyme.last >= score_border
           end.sample
         end
